@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Student Management System - Manage students, track performance, and organize department data efficiently." />
+  <title>StudentHub | Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="#" class="logo" onclick="navigateTo('admin'); return false;">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+          </svg>
+        </div>
+        <span class="logo-text">StudentHub</span>
+      </a>
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard" id="nav-dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-page="students" id="nav-students">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span>Students</span>
+      </a>
+      <a href="#" class="nav-item" data-page="add" id="nav-add">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="16" />
+          <line x1="8" y1="12" x2="16" y2="12" />
+        </svg>
+        <span>Add Student</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="server-status" id="serverStatus">
+        <span class="status-dot"></span>
+        <span class="status-text">Connecting...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-wrapper">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <h1 class="topbar-title" id="pageTitle">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="notification-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+        </div>
+        <div class="user-avatar" onclick="navigateTo('admin')" title="Admin Profile">
+          <span>M</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page: Dashboard -->
+    <main class="page-content" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Total Students</p>
+            <h2 class="stat-value" id="totalStudents">—</h2>
+          </div>
+          <div class="stat-bg"></div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22,4 12,14.01 9,11.01" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Active Students</p>
+            <h2 class="stat-value" id="activeStudents">—</h2>
+          </div>
+          <div class="stat-bg"></div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Departments</p>
+            <h2 class="stat-value" id="totalDepts">—</h2>
+          </div>
+          <div class="stat-bg"></div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+              <polyline points="17 6 23 6 23 12" />
+            </svg>
+          </div>
+          <div class="stat-info">
+            <p class="stat-label">Avg GPA</p>
+            <h2 class="stat-value" id="avgGpa">—</h2>
+          </div>
+          <div class="stat-bg"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-bottom">
+        <div class="chart-card">
+          <h3 class="card-title">Students by Department</h3>
+          <div id="deptChart" class="dept-chart"></div>
+        </div>
+        <div class="chart-card">
+          <h3 class="card-title">Students by Year</h3>
+          <div id="yearChart" class="year-chart"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Page: Students List -->
+    <main class="page-content hidden" id="page-students">
+      <div class="list-header">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search by name, email or roll number..."
+            autocomplete="off" />
+        </div>
+        <div class="filters">
+          <select id="filterDept">
+            <option value="">All Departments</option>
+            <option>Computer Science</option>
+            <option>Electronics</option>
+            <option>Mechanical</option>
+            <option>Civil</option>
+            <option>Electrical</option>
+            <option>Information Technology</option>
+            <option>Other</option>
+          </select>
+          <select id="filterYear">
+            <option value="">All Years</option>
+            <option value="1">Year 1</option>
+            <option value="2">Year 2</option>
+            <option value="3">Year 3</option>
+            <option value="4">Year 4</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">All Status</option>
+            <option>Active</option>
+            <option>Inactive</option>
+            <option>Graduated</option>
+            <option>Suspended</option>
+          </select>
+          <button class="btn-primary" onclick="navigateTo('add')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Student
+          </button>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Roll No.</th>
+              <th>Department</th>
+              <th>Year</th>
+              <th>GPA</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr>
+              <td colspan="7" class="empty-state">
+                <div class="loader"></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </main>
+
+    <!-- Page: Add / Edit Student -->
+    <main class="page-content hidden" id="page-add">
+      <div class="form-container">
+        <div class="form-header">
+          <h2 id="formTitle">Add New Student</h2>
+          <p id="formSubtitle">Fill in the details below to register a new student</p>
+        </div>
+        <form id="studentForm" novalidate>
+          <input type="hidden" id="studentId" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name <span class="req">*</span></label>
+              <input type="text" id="name" name="name" placeholder="e.g. John Doe" required />
+              <span class="field-error" id="nameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address <span class="req">*</span></label>
+              <input type="email" id="email" name="email" placeholder="e.g. john@example.com" required />
+              <span class="field-error" id="emailError"></span>
+            </div>
+            <div class="form-group">
+              <label for="rollNumber">Roll Number <span class="req">*</span></label>
+              <input type="text" id="rollNumber" name="rollNumber" placeholder="e.g. CS2024001" required />
+              <span class="field-error" id="rollNumberError"></span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="e.g. +91 9876543210" />
+            </div>
+            <div class="form-group">
+              <label for="department">Department <span class="req">*</span></label>
+              <select id="department" name="department" required>
+                <option value="">Select Department</option>
+                <option>Computer Science</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Electrical</option>
+                <option>Information Technology</option>
+                <option>Other</option>
+              </select>
+              <span class="field-error" id="departmentError"></span>
+            </div>
+            <div class="form-group">
+              <label for="year">Year <span class="req">*</span></label>
+              <select id="year" name="year" required>
+                <option value="">Select Year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+              </select>
+              <span class="field-error" id="yearError"></span>
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender <span class="req">*</span></label>
+              <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+              <span class="field-error" id="genderError"></span>
+            </div>
+            <div class="form-group">
+              <label for="gpa">GPA (0–10)</label>
+              <input type="number" id="gpa" name="gpa" min="0" max="10" step="0.01" placeholder="e.g. 8.5" />
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" name="status">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Graduated">Graduated</option>
+                <option value="Suspended">Suspended</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="address">Address</label>
+              <textarea id="address" name="address" rows="3" placeholder="Enter full address..."></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="navigateTo('students')">Cancel</button>
+            <button type="submit" class="btn-primary" id="submitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                <polyline points="17,21 17,13 7,13 7,21" />
+                <polyline points="7,3 7,8 15,8" />
+              </svg>
+              Save Student
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Page: Admin Profile -->
+  <main class="page-content hidden" id="page-admin">
+    <div class="admin-profile-container">
+      <div class="admin-header">
+        <h2>Admin mokshit </h2>
+        <p>BSc Data Science Student</p>
+      </div>
+
+      <div class="admin-contact-section">
+        <h3>Contact for Site Issues</h3>
+        <p>If you face any issues regarding the site, kindly drop a message below.</p>
+
+        <form class="admin-contact-form" id="adminContactForm">
+          <div class="form-grid" style="padding: 0; gap: 16px;">
+            <div class="form-group">
+              <label for="contact-name">Name <span class="req">*</span></label>
+              <input type="text" id="contact-name" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email <span class="req">*</span></label>
+              <input type="email" id="contact-email" name="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group full-width">
+              <label for="contact-msg">Message <span class="req">*</span></label>
+              <textarea id="contact-msg" name="message" rows="4" placeholder="Describe the issue..."
+                required></textarea>
+            </div>
+          </div>
+          <div class="form-actions"
+            style="border-top: none; padding: 16px 0 0 0; background: transparent; justify-content: flex-start;">
+            <button type="submit" class="btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span class="toast-icon"></span>
+    <span class="toast-message" id="toastMsg"></span>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay hidden" id="deleteModal">
+    <div class="modal">
+      <div class="modal-icon danger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6" />
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+        </svg>
+      </div>
+      <h3>Delete Student?</h3>
+      <p>This action cannot be undone. The student record will be permanently removed.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Student Modal -->
+  <div class="modal-overlay hidden" id="viewModal">
+    <div class="modal modal-large">
+      <button class="modal-close" onclick="closeViewModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div id="studentDetailContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
