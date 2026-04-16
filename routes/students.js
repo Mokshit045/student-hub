@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
         // Get paginated data
         const offset = (Number(page) - 1) * Number(limit);
         const [students] = await db.execute(
-            `SELECT * FROM students ${whereSql} ORDER BY id DESC LIMIT  OFFSET `,
+            `SELECT * FROM students ${whereSql} ORDER BY id DESC LIMIT ${Number(limit)} OFFSET ${Number(offset)}`,
             params
         );
 
